@@ -4,10 +4,18 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-card>
-        <img src="img/card-saopaolo.png"/>
-        <div class="card-title">São Paulo</div>
-        <div class="card-subtitle">41 Listings</div>
+<ion-content padding class="card-background-page">
+    <ion-fab right bottom>
+        <button ion-fab color="danger">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+
+    <ion-card (click)="goToAlbumPage()">
+        <img src="http://placehold.it/350x150"/>
+        <div class="card-description">
+            <p class="card-description__title">Birthdays</p>
+            <p class="card-description__subtitle">41 photos</p>
+        </div>
     </ion-card>
 </ion-content>

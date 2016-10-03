@@ -2,14 +2,14 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
-    selector: 'page-login',
-    templateUrl: 'login.html'
+    selector: 'page-album',
+    templateUrl: 'album.html'
 })
 
-export class LoginPage {
+export class AlbumPage {
     constructor(public navCtrl: NavController) {}
 
     ionViewDidLoad() {
-        console.log('Hello Login Page');
+        console.log('Hello Album Page');
     }
 }
