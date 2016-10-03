@@ -6,16 +6,16 @@
 
 <ion-content padding class="card-background-page">
     <ion-fab right bottom>
-        <button ion-fab color="danger">
+        <button ion-fab color="danger" (click)="addAlbum()">
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
 
-    <ion-card (click)="goToAlbumPage()">
+    <ion-card *ngFor="let album of albums" (click)="goToAlbumPage(album)">
         <img src="http://placehold.it/350x150"/>
         <div class="card-description">
-            <p class="card-description__title">Birthdays</p>
-            <p class="card-description__subtitle">41 photos</p>
+            <p class="card-description__title">{{ album.name }}</p>
+            <p class="card-description__subtitle">{{ album.photos_count }} photos</p>
         </div>
     </ion-card>
 </ion-content>

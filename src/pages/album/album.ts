@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
     selector: 'page-album',
@@ -7,7 +7,11 @@ import { NavController } from 'ionic-angular';
 })
 
 export class AlbumPage {
-    constructor(public navCtrl: NavController) {}
+    album: any;
+
+    constructor(public navCtrl: NavController, private navParams: NavParams) {
+        this.album = navParams.get('album');
+    }
 
     ionViewDidLoad() {
         console.log('Hello Album Page');

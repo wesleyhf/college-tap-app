@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 import { AlbumPage } from '../album/album';
 
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 @Component({
     selector: 'page-home',
@@ -13,8 +13,9 @@ import * as firebase from 'firebase';
 
 export class HomePage {
     user: any = {};
+    albums: any = [];
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController, private alertCtrl: AlertController) {
         // this.pushPage = LoginPage;
         // this.params = {};
 
@@ -40,7 +41,45 @@ export class HomePage {
         });
     }
 
-    goToAlbumPage() {
-        this.navCtrl.push(AlbumPage);
+    addAlbum() {
+        let alert = this.alertCtrl.create({
+            title: 'New Album',
+            inputs: [
+                {
+                    name: 'albumName',
+                    placeholder: 'Album name'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Create',
+                    handler: data => {
+                        let id = data.albumName
+                            .trim()
+                            .replace(/\s/g, '_');
+
+                        this.albums.push({
+                            'id': id,
+                            'name': data.albumName,
+                            'photos_count': 0
+                        });
+
+                        console.log(this.albums);
+                    }
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
+    goToAlbumPage(album) {
+        this.navCtrl.push(AlbumPage, {
+            'album': album
+        });
     }
 }
