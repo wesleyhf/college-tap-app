@@ -12,7 +12,7 @@
     </ion-fab>
 
     <ion-card *ngFor="let album of albums" (click)="goToAlbumPage(album)">
-        <img src="http://placehold.it/350x150"/>
+        <img src="assets/img/empty.jpg"/>
         <div class="card-description">
             <p class="card-description__title">{{ album.name }}</p>
             <p class="card-description__subtitle">{{ album.photos_count }} photos</p>
