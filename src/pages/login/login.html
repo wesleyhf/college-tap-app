@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar hideBackButton="true">
         <ion-title>Login</ion-title>
     </ion-navbar>
 </ion-header>
@@ -8,16 +8,16 @@
     <ion-list>
         <ion-item>
             <ion-label floating>Username</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="name"></ion-input>
         </ion-item>
 
         <ion-item>
             <ion-label floating>Password</ion-label>
-            <ion-input type="password"></ion-input>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
         </ion-item>
 
         <ion-item>
-            <button ion-button full>Login</button>
+            <button ion-button full (click)="checkAuth()">Login</button>
         </ion-item>
     </ion-list>
 </ion-content>

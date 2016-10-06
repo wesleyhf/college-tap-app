@@ -1,48 +1,62 @@
+// import { Component, Type } from '@angular/core';
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { NativeStorage } from 'ionic-native';
 
-// import { LoginPage } from '../login/login';
+// import { FilterArrayPipe } from '../../filters/filter-array-pipe';
+
+import { LoginPage } from '../login/login';
 import { AlbumPage } from '../album/album';
-
-import * as firebase from 'firebase';
+import { AboutPage } from '../about/about';
 
 @Component({
     selector: 'page-home',
-    templateUrl: 'home.html'
+    templateUrl: 'home.html',
+    // pipes: [FilterArrayPipe],
 })
 
 export class HomePage {
-    user: any = {};
+    user = {
+        name: 'wesley',
+        password: '123',
+        active: false
+    };
+
+    // search: string = '';
     albums: any = [];
 
     constructor(public nav: NavController, private alert: AlertController) {
-        firebase.initializeApp({
-            apiKey: "AIzaSyCNqIMV6BjjMWX0EAvLNgm-9U-hUQmmXMA",
-            authDomain: "faculdade-b1ea8.firebaseapp.com",
-            databaseURL: "https://faculdade-b1ea8.firebaseio.com",
-            storageBucket: "faculdade-b1ea8.appspot.com",
-            messagingSenderId: "7518909020"
-        });
+        this.loadAlbums();
     }
 
     ngOnInit() {
-        // we will use anonymous auth for this example
-        firebase.auth().signInAnonymously()
-            .then((_auth) => {
-                console.log('login success');
-                // this.loadData();
-            })
-            // .catch((error: firebase.auth.Error) => {
-            .catch((error: any) => {
-                // var errorCode = error.code;
-                alert(error.message);
-            });
+        if (! this.user.active) {
+            this.nav.push(LoginPage, { user:this.user });
+        }
+    }
+
+    ionViewWillEnter() {
+        this.saveAlbums(null);
+    }
+
+    saveAlbums(album) {
+        if (album) {
+            this.albums.push(album);
+        }
+
+        NativeStorage.setItem('albums', this.albums)
+        .then(
+            () => console.log('Stored item!'),
+            error => console.error('Error storing item', error)
+        );
     }
 
     loadAlbums() {
-        // firebase.database().ref('assets').on('value', (_snapshot: any) => {
-        //     console.log(_snapshot);
-        // });
+        NativeStorage.getItem('albums')
+        .then(
+            albums => this.albums = albums,
+            error => console.error(error)
+        );
     }
 
     addAlbum() {
@@ -62,17 +76,12 @@ export class HomePage {
                 {
                     text: 'Create',
                     handler: data => {
-                        let id = data.albumName
-                            .trim()
-                            .replace(/\s/g, '_');
-
-                        this.albums.push({
-                            'id': id,
+                        let album = {
                             'name': data.albumName,
-                            'photos_count': 0
-                        });
+                            'photos': [],
+                        }
 
-                        console.log(this.albums);
+                        this.saveAlbums(album);
                     }
                 }
             ]
@@ -83,5 +92,9 @@ export class HomePage {
 
     goToAlbumPage(album) {
         this.nav.push(AlbumPage, { album });
+    }
+
+    goToAboutPage(album) {
+        this.nav.push(AboutPage);
     }
 }

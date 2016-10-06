@@ -11,5 +11,7 @@
         </button>
     </ion-fab>
 
-    <h1>list of photos</h1>
+    <ion-card *ngFor="let photo of album.photos">
+        <img [src]="photo"/>
+    </ion-card>
 </ion-content>

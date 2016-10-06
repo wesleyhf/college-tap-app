@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
     selector: 'page-login',
@@ -7,9 +7,25 @@ import { NavController } from 'ionic-angular';
 })
 
 export class LoginPage {
-    constructor(public navCtrl: NavController) {}
+    user: any;
+
+    name: string = '';
+    password: string = '';
+
+    constructor(public nav: NavController, private params: NavParams) {
+        this.user = params.data.user;
+    }
 
     ionViewDidLoad() {
         console.log('Hello Login Page');
+    }
+
+    checkAuth() {
+        if (this.user.name === this.name && this.user.password === this.password) {
+            this.user.active = true;
+            this.nav.pop();
+        } else {
+            alert('Invalid login.');
+        }
     }
 }

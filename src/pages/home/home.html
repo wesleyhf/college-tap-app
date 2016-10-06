@@ -1,6 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Albums</ion-title>
+
+        <ion-buttons end>
+            <button ion-button (click)="goToAboutPage()">
+                <ion-icon name="help"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -11,11 +17,21 @@
         </button>
     </ion-fab>
 
+    <!-- <ion-list>
+        <ion-item>
+            <ion-label floating>Search</ion-label>
+            <ion-input type="text" [(ngModel)]="search"></ion-input>
+        </ion-item>
+    </ion-list> -->
+
+    <!-- <ion-card *ngFor="let album of albums | filter:search" (click)="goToAlbumPage(album)"> -->
     <ion-card *ngFor="let album of albums" (click)="goToAlbumPage(album)">
-        <img src="assets/img/empty.jpg"/>
+        <img src="assets/img/empty.jpg" *ngIf="album.photos.length < 1" />
+        <img [src]="album.photos[0]" *ngIf="album.photos.length" />
+
         <div class="card-description">
             <p class="card-description__title">{{ album.name }}</p>
-            <p class="card-description__subtitle">{{ album.photos_count }} photos</p>
+            <p class="card-description__subtitle">{{ album.photos.length }} photos</p>
         </div>
     </ion-card>
 </ion-content>
